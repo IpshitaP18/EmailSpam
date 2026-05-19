@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpamGuard Bot - AI Email Classifier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">SpamGuard Bot</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#classifier">Classifier</a></li>
+                    <li><a href="#gmail" class="gmail-btn">📧 Gmail Integration</a></li>
+                    <li><a href="#stats">Stats</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header>
+            <div class="header-content">
+                <h1 class="main-title">SpamGuard Bot</h1>
+                <p class="subtitle">AI-Powered Email Spam Detection</p>
+                <p class="tagline">Keep your inbox clean with advanced machine learning</p>
+            </div>
+        </header>
+
+        <main>
+            <!-- Gmail Bot Integration -->
+            <section class="section gmail-section" id="gmail">
+                <div class="section-header">
+                    <h2>📧 Gmail Bot Integration</h2>
+                    <p class="section-desc">Automatically scan and filter spam from your Gmail inbox</p>
+                    <div class="gmail-connection-panel">
+                        <div id="gmailConnectionStatus" class="status-pill disconnected">Gmail Disconnected</div>
+                        <div id="gmailScanStatus" class="status-pill disconnected">Scan idle</div>
+                        <button id="gmailRefreshStatusBtn" class="btn btn-small btn-secondary">Refresh status</button>
+                    
+                    </div>
+                </div>
+                <div class="gmail-integration-box">
+                    <div class="gmail-feature">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Connect Gmail</h3>
+                        <p>Link your Gmail account to automatically scan emails</p>
+                        <button id="gmailConnectBtn" class="btn btn-primary btn-large">Connect Gmail Account</button>
+                    </div>
+                    <div class="gmail-feature">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Gmail Bot Settings</h3>
+                        <p>Configure automation rules and filtering options</p>
+                        <button id="gmailSettingsBtn" class="btn btn-secondary btn-large">Configure Bot</button>
+                    </div>
+                    <div class="gmail-feature">
+                        <div class="feature-icon">📊</div>
+                        <h3>Bot Statistics</h3>
+                        <p>View spam detection stats from your Gmail</p>
+                        <button id="gmailStatsBtn" class="btn btn-secondary btn-large">View Bot Stats</button>
+                    </div>
+                </div>
+                <div id="gmailStatus" class="gmail-status hidden"></div>
+                <div id="gmailRecentScans" class="gmail-recent-scans hidden"></div>
+            </section>
+
+            <!-- Single Email Classification -->
+            <section class="section" id="classifier">
+                <div class="section-header">
+                    <h2>Single Email Classification</h2>
+                    <p class="section-desc">Test individual emails for spam</p>
+                </div>
+                <div class="form-group">
+                    <label for="emailText">Enter Email Content:</label>
+                    <textarea 
+                        id="emailText" 
+                        placeholder="Paste your email content here..." 
+                        rows="8"
+                    ></textarea>
+                </div>
+                <button id="classifyBtn" class="btn btn-primary">Classify Email</button>
+                <button id="clearBtn" class="btn btn-secondary">Clear</button>
+
+                <!-- Result Display -->
+                <div id="resultContainer" class="result-container hidden">
+                    <div id="resultBox" class="result-box"></div>
+                    <div id="confidenceChart" class="confidence-chart"></div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingSpinner" class="spinner hidden"></div>
+            </section>
+
+            <!-- Batch Classification -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Batch Email Classification</h2>
+                    <p class="section-desc">Classify multiple emails at once</p>
+                </div>
+                <div class="form-group">
+                    <label for="batchEmails">Enter Multiple Emails (one per line, separated by double line breaks):</label>
+                    <textarea 
+                        id="batchEmails" 
+                        placeholder="Paste multiple emails here. Separate each email with a blank line..." 
+                        rows="10"
+                    ></textarea>
+                </div>
+                <button id="batchClassifyBtn" class="btn btn-primary">Classify Batch</button>
+                <button id="clearBatchBtn" class="btn btn-secondary">Clear</button>
+
+                <!-- Batch Results -->
+                <div id="batchResultContainer" class="batch-result-container hidden">
+                    <h3>Batch Results</h3>
+                    <div id="batchStats" class="batch-stats"></div>
+                    <div id="batchResults" class="batch-results"></div>
+                </div>
+
+                <!-- Batch Loading -->
+                <div id="batchLoadingSpinner" class="spinner hidden"></div>
+            </section>
+
+            <!-- Sample Emails -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Test Samples</h2>
+                    <p class="section-desc">Try classification with pre-loaded examples</p>
+                </div>
+                <div class="samples">
+                    <div class="sample">
+                        <h4>Spam Example 1</h4>
+                        <p>"Congratulations! You have won a free iPhone! Click here to claim your prize now!"</p>
+                        <button class="btn btn-small" onclick="loadSample(0)">Use Sample</button>
+                    </div>
+                    <div class="sample">
+                        <h4>Legitimate Example 1</h4>
+                        <p>"Hi, I wanted to follow up on our meeting tomorrow at 2 PM. Can you confirm your availability?"</p>
+                        <button class="btn btn-small" onclick="loadSample(1)">Use Sample</button>
+                    </div>
+                    <div class="sample">
+                        <h4>Spam Example 2</h4>
+                        <p>"URGENT! Your bank account has been compromised. Click here to verify your password immediately."</p>
+                        <button class="btn btn-small" onclick="loadSample(2)">Use Sample</button>
+                    </div>
+                    <div class="sample">
+                        <h4>Legitimate Example 2</h4>
+                        <p>"Your order has been shipped and will arrive in 2-3 business days. Thank you for your purchase!"</p>
+                        <button class="btn btn-small" onclick="loadSample(3)">Use Sample</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="section" id="stats">
+                <div class="section-header">
+                    <h2>📊 Classification Statistics</h2>
+                    <p class="section-desc">Track your spam detection performance</p>
+                </div>
+                <div id="statsContainer" class="stats-grid"></div>
+            </section>
+
+            <!-- Model Information -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Model Information</h2>
+                    <p class="section-desc">Details about the ML model</p>
+                </div>
+                <div id="modelInfo" class="model-info">
+                    <p>Loading model information...</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Email Spam Classifier | Powered by AI/ML</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

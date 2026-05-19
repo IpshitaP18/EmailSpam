@@ -1,0 +1,29 @@
+{
+  "application": {
+    "name": "Email Spam Classifier",
+    "version": "1.0.0",
+    "description": "AI/ML-based email spam classification system",
+    "author": "AI Developer"
+  },
+  "backend": {
+    "host": "0.0.0.0",
+    "port": 5000,
+    "debug": true,
+    "cors_enabled": true
+  },
+  "frontend": {
+    "port": 8000,
+    "host": "localhost"
+  },
+  "model": {
+    "type": "naive_bayes_tfidf",
+    "max_features": 5000,
+    "language": "english",
+    "min_email_length": 5
+  },
+  "api": {
+    "timeout": 30,
+    "max_batch_size": 100,
+    "response_format": "json"
+  }
+}

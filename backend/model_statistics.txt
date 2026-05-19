@@ -1,0 +1,29 @@
+Spam Classifier Model Statistics
+=================================
+Dataset path: C:\Users\ipshi\OneDrive\Desktop\EmailSpam\backend\mail_data.csv
+Total examples: 5572
+ - Spam examples: 747
+ - Ham examples: 4825
+Training examples: 4457
+Test examples: 1115
+
+Model: Naive Bayes with TF-IDF
+Model file: C:\Users\ipshi\OneDrive\Desktop\EmailSpam\backend\spam_model.pkl
+
+Performance Metrics
+-------------------
+Accuracy: 0.9812
+
+Classification report:
+              precision    recall  f1-score   support
+
+         ham       0.98      1.00      0.99       966
+        spam       1.00      0.86      0.92       149
+
+    accuracy                           0.98      1115
+   macro avg       0.99      0.93      0.96      1115
+weighted avg       0.98      0.98      0.98      1115
+
+Confusion matrix:
+[[966   0]
+ [ 21 128]]

@@ -1,0 +1,126 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# Model files
+*.pkl
+*.pickle
+spam_model.pkl
+vectorizer.pkl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.env.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Node modules (if added later)
+node_modules/
+npm-debug.log
+
+# Temporary files
+*.tmp
+*.temp
+.temp/
+
+# IDE settings
+*.sublime-project
+*.sublime-workspace
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+$RECYCLE.BIN/
+ehthumbs.db
+
+# Project specific
+.session/
+test_results/
+
+# -----------------------------------------------------------------------------
+# Project-specific ignores: models, datasets, credentials, runtime state, secrets
+# -----------------------------------------------------------------------------
+
+# Model artifacts
+*.joblib
+*.model
+models/
+
+# Dataset files (do NOT commit private or large datasets)
+backend/mail_data.csv
+data/
+datasets/
+
+# Gmail / runtime state and generated JSON (safe to ignore)
+backend/*.json
+gmail_scan_history.json
+gmail_scan_status.json
+gmail_status.json
+
+# OAuth / tokens / credentials
+token.pickle
+token.json
+credentials.json
+backend/credentials.json
+backend/gmail_config.json
+
+# Environment and secret files
+.env
+.env.*
+secrets.yml
+secrets.json
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.jks
+*.pfx
+
+# OS / editor personal files
+.vscode/
+.idea/
+*.sublime-*
+
+# End of project-specific ignores
