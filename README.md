@@ -10,21 +10,6 @@ SpamGuardBot is a lightweight email spam detection and Gmail automation tool. It
 - Explainability helper returning top contributing terms for a prediction.
 - Model persistence: trained model saved to `spam_model.pkl` for fast startup.
 
-## Architecture
-
-```mermaid
-flowchart LR
-  A[User / Frontend] -->|POST /api/classify| B[Flask API (backend/app.py)]
-  B --> C[SpamClassifier Pipeline]
-  C --> D[(TF-IDF Vectorizer + MultinomialNB)]
-  B --> E[GmailBot]
-  E --> F[Gmail API]
-  B --> G[Storage: json files & model files]
-  subgraph Storage
-    G
-  end
-```
-
 The main components:
 - Frontend: simple demo UI in `frontend/` that calls the Flask API.
 - Backend API: `backend/app.py` exposes endpoints and loads the classifier asynchronously.
@@ -82,40 +67,8 @@ POST `/api/batch-classify` JSON body:
 { "emails": ["email #1 text", "email #2 text"] }
 ```
 
-## Gmail Integration
-`backend/gmail_bot.py` handles Gmail OAuth flow (creates `token.pickle` after auth) and uses the Gmail API to read messages, classify them via the trained model, then optionally add labels or move to spam.
-
-Be careful when using move/label features on a live account — test on a secondary account or enable only labeling first.
-
 ## File Structure
 
 - `backend/` — Flask app, spam classifier, Gmail bot, models, and data
 - `frontend/` — demo UI (static HTML/JS/CSS)
 - `README.md` — this file
-
-## Screenshots
-Add screenshots to the `screenshots/` folder. Recommended images:
-- `screenshots/demo-classify.png` — frontend classify flow
-- `screenshots/gmail-actions.png` — example Gmail message moved/labeled
-
-## Deployment Notes
-- For production, run Flask behind a WSGI server (Gunicorn or Waitress on Windows) and secure your OAuth credentials.
-
-## Proposed Cleanup (review before deletion)
-I recommend reviewing and confirming deletions before they are applied. Candidates for removal (common generated files or redundant docs):
-
-- `backend/gmail_scan_history.json`, `backend/gmail_scan_status.json`, `backend/gmail_status.json` — runtime state files that are generated; safe to delete if you want a clean repo.
-- `start.sh`, `start.bat` — convenience scripts; keep if you want quick start scripts.
-- Any `.pyc` or `__pycache__` folders — safe to delete (generated files).
-
-Do you want me to remove the generated JSON state files and any `__pycache__` folders now? Reply yes to proceed and I'll delete only those safe-to-remove files.
-
-## Contributing
-Feel free to open issues or PRs. If you add new datasets, please note provenance and licensing.
-
-## License
-Add a license file (e.g., MIT) if you want to publish this project publicly.
-
----
-
-If you'd like, I can: generate a more detailed architecture diagram file, commit a minimal `.gitignore` (to ignore `token.pickle`, `*.pkl`, `__pycache__`), and safely delete runtime JSON files now — tell me which of these to proceed with.
